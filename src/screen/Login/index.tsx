@@ -17,7 +17,7 @@ import Toast from 'react-native-toast-message';
 import {useDispatch} from 'react-redux';
 import InputText from '../../components/UI/InputText';
 import CustomButton from '../../components/UI/CustomButton';
-import {Strings} from '../../utils';
+import {Strings, Assets} from '../../utils';
 import {LoginFormValues} from '../../utils/Types';
 import {setUser, setToken} from '../../redux-toolkit/rootSlice';
 import {api} from '../../services/api';
@@ -116,7 +116,7 @@ const Login = ({navigation}: Props) => {
           <Text style={styles.logoText}>{Strings.appName}</Text>
           <View style={styles.imagePlaceholder}>
             <Image
-              source={require('../../assets/Icons/placeholder.png')}
+              source={Assets.placeholder}
               style={styles.placeholderImage}
               resizeMode="contain"
             />
@@ -184,21 +184,21 @@ const Login = ({navigation}: Props) => {
           <View style={styles.socialContainer}>
             <TouchableOpacity style={styles.socialButton}>
               <Image
-                source={require('../../assets/Icons/google.png')}
+                source={Assets.google}
                 style={styles.socialIcon}
               />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.socialButton}>
               <Image
-                source={require('../../assets/Icons/apple.png')}
+                source={Assets.apple}
                 style={styles.socialIcon}
               />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.socialButton}>
               <Image
-                source={require('../../assets/Icons/facebook.png')}
+                source={Assets.facebook}
                 style={styles.socialIcon}
               />
             </TouchableOpacity>

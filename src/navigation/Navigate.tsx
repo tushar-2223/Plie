@@ -1,12 +1,12 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Splash from '../screen/Splash';
 import Authenticated from './Authenticated';
 import UnAuthenticated from './UnAuthenticated';
 import Routes from './Routes';
-import {useSelector} from 'react-redux';
-import {RootState} from '../redux-toolkit/store';
 
 export type RootNavigatorType = {
+  Splash: undefined;
   Authenticated: undefined;
   UnAuthenticated: undefined;
 };
@@ -14,17 +14,14 @@ export type RootNavigatorType = {
 const Stack = createNativeStackNavigator<RootNavigatorType>();
 
 const Navigate = () => {
-  const token = useSelector((state: RootState) => state.app.token);
-
   return (
     <Stack.Navigator
-      initialRouteName={
-        token ? Routes.Authenticated : Routes.UnAuthenticated
-      }
+      initialRouteName={Routes.Splash}
       screenOptions={{
         headerShown: false,
         animation: 'fade',
       }}>
+      <Stack.Screen name={Routes.Splash} component={Splash} />
       <Stack.Screen
         name={Routes.UnAuthenticated}
         component={UnAuthenticated}
