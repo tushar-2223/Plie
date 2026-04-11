@@ -69,10 +69,6 @@ const EventCard = ({event, isFavorite, onToggleFavorite, onShare}: Props) => {
 
   return (
     <View style={styles.card}>
-      <TouchableOpacity style={styles.arrowContainer} activeOpacity={0.6}>
-        <Icon name="arrow-right" size={20} color={Colors.DARK} />
-      </TouchableOpacity>
-
       <View style={styles.cardContent}>
         {(event.event_profile_img ?? event.event_profile_pic) && (
           <Image
@@ -83,54 +79,56 @@ const EventCard = ({event, isFavorite, onToggleFavorite, onShare}: Props) => {
         )}
 
         <View style={styles.infoContainer}>
-          <Text style={styles.eventName} numberOfLines={1}>
-            {event.event_name}
-          </Text>
+          <View style={styles.titleRow}>
+            <Text style={styles.eventName} numberOfLines={1}>
+              {event.event_name}
+            </Text>
+            <TouchableOpacity hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}>
+              <Icon name="arrow-right" size={20} color={Colors.DARK} />
+            </TouchableOpacity>
+          </View>
 
-          {displayDate !== '' && (
-            <Text style={styles.eventDate}>{displayDate}</Text>
-          )}
+          <View style={styles.dateLocationRow}>
+            <Text style={styles.eventDate} numberOfLines={1}>{displayDate}</Text>
+            <Text style={styles.locationText} numberOfLines={1}>{displayLocation}</Text>
+          </View>
 
           {displayPrice !== '' && (
-            <Text style={styles.eventPrice}>{displayPrice}</Text>
+            <Text style={styles.eventPrice} numberOfLines={1}>{displayPrice}</Text>
           )}
 
-          {tags.length > 0 && (
-            <View style={styles.tagsContainer}>
-              {tags.slice(0, 4).map((tag, index) => (
-                <View key={`${tag}-${index}`} style={styles.tag}>
-                  <Text style={styles.tagText}>{tag}</Text>
-                </View>
-              ))}
+          <View style={styles.bottomRow}>
+            {tags.length > 0 && (
+              <View style={styles.tagsContainer}>
+                {tags.slice(0, 3).map((tag, index) => (
+                  <View key={`${tag}-${index}`} style={styles.tag}>
+                    <Text style={styles.tagText}>{tag}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+
+            <View style={styles.actionsContainer}>
+              <TouchableOpacity
+                onPress={handleShare}
+                hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}
+                activeOpacity={0.6}>
+                <Icon name="export-variant" size={22} color={Colors.DARK} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={handleToggleFavorite}
+                hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}
+                activeOpacity={0.6}>
+                <Icon
+                  name={isFavorite ? 'cards-heart' : 'heart-outline'}
+                  size={24}
+                  color={isFavorite ? '#21D0B2' : Colors.DARK}
+                />
+              </TouchableOpacity>
             </View>
-          )}
+          </View>
         </View>
-
-        {displayLocation !== '' && (
-          <Text style={styles.locationText} numberOfLines={2}>
-            {displayLocation}
-          </Text>
-        )}
-      </View>
-
-      <View style={styles.actionsContainer}>
-        <TouchableOpacity
-          onPress={handleShare}
-          hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}
-          activeOpacity={0.6}>
-          <Icon name="export-variant" size={22} color={Colors.DARK} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={handleToggleFavorite}
-          hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}
-          activeOpacity={0.6}>
-          <Icon
-            name={isFavorite ? 'heart' : 'heart-outline'}
-            size={24}
-            color={isFavorite ? Colors.ACCENT : Colors.LIGHT_TEXT}
-          />
-        </TouchableOpacity>
       </View>
     </View>
   );

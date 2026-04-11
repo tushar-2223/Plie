@@ -3,13 +3,12 @@ import {Colors} from '../../../utils';
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.ACCENT,
-    paddingVertical: 14,
-    paddingHorizontal: 32,
-    borderRadius: 25,
+    backgroundColor: '#21D0B2',
+    paddingVertical: 10,
+    paddingHorizontal: 28,
+    borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 120,
   },
   buttonText: {
     color: Colors.PRIMARY,

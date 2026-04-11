@@ -37,8 +37,8 @@ const InputText = ({
         style={[
           styles.inputContainer,
           {
-            borderColor: error ? Colors.ERROR : Colors.BORDER,
-            borderWidth: error ? 1.5 : 1,
+            borderColor: error ? Colors.ERROR : 'transparent',
+            borderWidth: error ? 1 : 0,
           },
         ]}>
         <TextInput
