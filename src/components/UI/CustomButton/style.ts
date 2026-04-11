@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
+    minWidth: 120, // Predefined minWidth to avoid shrinking
   },
   buttonText: {
     color: Colors.PRIMARY,

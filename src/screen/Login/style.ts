@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.PRIMARY,
   },
+  scrollContent: {
+    flexGrow: 1,
+    backgroundColor: Colors.PRIMARY,
+  },
   headerArea: {
     backgroundColor: '#D1D1D1',
     alignItems: 'center',
@@ -33,11 +37,18 @@ const styles = StyleSheet.create({
   formArea: {
     paddingHorizontal: 28,
     paddingTop: 32,
-    paddingBottom: 20,
+    paddingBottom: 40, // Increased padding to allow scrolling past the keyboard
+    backgroundColor: Colors.PRIMARY,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    flex: 1,
+  },
+  inputGap: {
+    marginBottom: 20,
   },
   forgotContainer: {
     alignSelf: 'flex-end',
-    marginTop: 4,
+    marginTop: 0, // Adjusted for new input layout
   },
   forgotText: {
     fontSize: 11,
@@ -46,6 +57,9 @@ const styles = StyleSheet.create({
   signInRow: {
     alignItems: 'flex-end',
     marginTop: 20,
+  },
+  signInButton: {
+    // Ensuring it doesn't shrink and aligns well
   },
   signUpContainer: {
     flexDirection: 'row',
@@ -103,7 +117,7 @@ const styles = StyleSheet.create({
   guestContainer: {
     alignSelf: 'flex-end',
     marginTop: 40,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   guestText: {
     fontSize: 12,

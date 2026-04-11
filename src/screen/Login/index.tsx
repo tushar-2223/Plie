@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   ScrollView,
   View,
@@ -16,6 +16,7 @@ import {z} from 'zod';
 import Toast from 'react-native-toast-message';
 import {useDispatch} from 'react-redux';
 import InputText from '../../components/UI/InputText';
+import {CustomTextInputRef} from '../../components/UI/InputText';
 import CustomButton from '../../components/UI/CustomButton';
 import {Strings, Assets} from '../../utils';
 import {LoginFormValues} from '../../utils/Types';
@@ -55,6 +56,10 @@ const Login = ({navigation}: Props) => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
+
+  // Refs for focus management
+  const emailRef = useRef<CustomTextInputRef>(null);
+  const passwordRef = useRef<CustomTextInputRef>(null);
 
   const onSubmit = async (data: LoginFormValues) => {
     setLoading(true);
@@ -107,11 +112,14 @@ const Login = ({navigation}: Props) => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
       <ScrollView
         bounces={false}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled">
+        
         <View style={styles.headerArea}>
           <Text style={styles.logoText}>{Strings.appName}</Text>
           <View style={styles.imagePlaceholder}>
@@ -126,34 +134,44 @@ const Login = ({navigation}: Props) => {
         <View style={styles.formArea}>
           <Controller
             control={control}
+            name="email"
             render={({field: {onChange, onBlur, value}}) => (
               <InputText
+                ref={emailRef}
                 label={Strings.emailLabel}
                 placeholder={Strings.emailPlaceholder}
                 keyboardType="email-address"
+                autoCapitalize="none"
+                returnKeyType="next"
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
                 error={errors.email?.message}
+                onSubmitEditing={() => passwordRef.current?.focus()}
+                containerStyle={styles.inputGap}
               />
             )}
-            name="email"
           />
 
           <Controller
             control={control}
+            name="password"
             render={({field: {onChange, onBlur, value}}) => (
               <InputText
+                ref={passwordRef}
                 label={Strings.passwordLabel}
                 placeholder={Strings.passwordPlaceholder}
+                secureTextEntry={true}
+                showPasswordToggle={true}
+                returnKeyType="done"
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
                 error={errors.password?.message}
-                secureTextEntry={true}
+                onSubmitEditing={handleSubmit(onSubmit)}
+                containerStyle={styles.inputGap}
               />
             )}
-            name="password"
           />
 
           <TouchableOpacity style={styles.forgotContainer}>
@@ -165,6 +183,7 @@ const Login = ({navigation}: Props) => {
               title={Strings.signIn}
               onPress={handleSubmit(onSubmit)}
               loading={loading}
+              style={styles.signInButton}
             />
           </View>
 
@@ -183,24 +202,15 @@ const Login = ({navigation}: Props) => {
 
           <View style={styles.socialContainer}>
             <TouchableOpacity style={styles.socialButton}>
-              <Image
-                source={Assets.google}
-                style={styles.socialIcon}
-              />
+              <Image source={Assets.google} style={styles.socialIcon} />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.socialButton}>
-              <Image
-                source={Assets.apple}
-                style={styles.socialIcon}
-              />
+              <Image source={Assets.apple} style={styles.socialIcon} />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.socialButton}>
-              <Image
-                source={Assets.facebook}
-                style={styles.socialIcon}
-              />
+              <Image source={Assets.facebook} style={styles.socialIcon} />
             </TouchableOpacity>
           </View>
 
