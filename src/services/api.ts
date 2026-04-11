@@ -1,5 +1,5 @@
 import {ApiResponse, ApisauceInstance, create} from 'apisauce';
-import {Constants} from '../utils';
+import {API_BASE_URL} from '../utils/Constant';
 import {LoginResponse, EventsResponse} from '../utils/Types';
 import {getGeneralApiProblem, GeneralApiProblem} from './apiProblem';
 
@@ -8,7 +8,7 @@ export class Api {
 
   constructor() {
     this.apisauce = create({
-      baseURL: Constants.BASE_URL,
+      baseURL: API_BASE_URL,
       timeout: 10000,
       headers: {
         Accept: 'application/json',

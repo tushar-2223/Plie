@@ -48,7 +48,7 @@ const EventCard = ({event, isFavorite, onToggleFavorite, onShare}: Props) => {
 
   const getDisplayLocation = (): string => {
     const parts = [event.city, event.country].filter(Boolean);
-    return parts.join(', ') || event.location || '';
+    return parts.join(', ');
   };
 
   const getTags = (): string[] => {
