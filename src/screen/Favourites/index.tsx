@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, FlatList} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector, useDispatch} from 'react-redux';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,7 +12,6 @@ import {Colors, Strings} from '../../utils';
 import styles from './style';
 
 const Favourites = () => {
-  const user = useSelector((state: RootState) => state.app.user);
   const favoriteItems = useSelector((state: RootState) => state.app.favorites);
   const dispatch = useDispatch();
 
@@ -36,8 +36,6 @@ const Favourites = () => {
 
   const keyExtractor = (item: EventItem) => item.event_date_id.toString();
 
-  const userName = user?.usr_fname ?? 'User';
-
   const ListEmptyComponent = (
       <View style={styles.emptyContainer}>
         <Icon name="heart-outline" size={64} color={Colors.BORDER} />
@@ -47,16 +45,7 @@ const Favourites = () => {
     );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.greetingText}>
-          {Strings.hello} {userName}!
-        </Text>
-        <Text style={styles.subtitleText}>{Strings.readyToDance}</Text>
-      </View>
-
-      <View style={styles.divider} />
-
+    <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <FlatList
         data={favoriteItems}
         renderItem={renderItem}
@@ -68,7 +57,7 @@ const Favourites = () => {
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={ListEmptyComponent}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

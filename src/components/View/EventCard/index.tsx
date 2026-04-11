@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity, Share} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Share, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {EventItem} from '../../../utils/Types';
-import {Colors} from '../../../utils';
+import {Assets, Colors} from '../../../utils';
 import styles from './style';
 
 interface Props {
@@ -13,6 +13,8 @@ interface Props {
 }
 
 const EventCard = ({event, isFavorite, onToggleFavorite, onShare}: Props) => {
+  const [imageError, setImageError] = React.useState(false);
+
   const handleToggleFavorite = () => {
     onToggleFavorite(event);
   };
@@ -67,16 +69,21 @@ const EventCard = ({event, isFavorite, onToggleFavorite, onShare}: Props) => {
   const displayPrice = getDisplayPrice();
   const displayLocation = getDisplayLocation();
 
+  const imageUrl = event.event_profile_img ?? event.event_profile_pic;
+
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
-        {(event.event_profile_img ?? event.event_profile_pic) && (
-          <Image
-            source={{uri: event.event_profile_img ?? event.event_profile_pic}}
-            style={styles.eventImage}
-            resizeMode="cover"
-          />
-        )}
+        <Image
+          source={
+            !imageError && imageUrl
+              ? {uri: imageUrl}
+              : Assets.placeholder
+          }
+          style={styles.eventImage}
+          resizeMode="cover"
+          onError={() => setImageError(true)}
+        />
 
         <View style={styles.infoContainer}>
           <View style={styles.titleRow}>
@@ -99,13 +106,17 @@ const EventCard = ({event, isFavorite, onToggleFavorite, onShare}: Props) => {
 
           <View style={styles.bottomRow}>
             {tags.length > 0 && (
-              <View style={styles.tagsContainer}>
-                {tags.slice(0, 3).map((tag, index) => (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.tagsContainer}
+                contentContainerStyle={styles.tagsContentContainer}>
+                {tags.map((tag, index) => (
                   <View key={`${tag}-${index}`} style={styles.tag}>
                     <Text style={styles.tagText}>{tag}</Text>
                   </View>
                 ))}
-              </View>
+              </ScrollView>
             )}
 
             <View style={styles.actionsContainer}>
@@ -113,7 +124,7 @@ const EventCard = ({event, isFavorite, onToggleFavorite, onShare}: Props) => {
                 onPress={handleShare}
                 hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}
                 activeOpacity={0.6}>
-                <Icon name="export-variant" size={22} color={Colors.DARK} />
+                <Icon name="share-outline" size={24} color={Colors.DARK} />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -121,8 +132,8 @@ const EventCard = ({event, isFavorite, onToggleFavorite, onShare}: Props) => {
                 hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}
                 activeOpacity={0.6}>
                 <Icon
-                  name={isFavorite ? 'cards-heart' : 'heart-outline'}
-                  size={24}
+                  name={isFavorite ? 'heart' : 'heart-outline'}
+                  size={26}
                   color={isFavorite ? '#21D0B2' : Colors.DARK}
                 />
               </TouchableOpacity>

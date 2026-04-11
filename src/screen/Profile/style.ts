@@ -4,7 +4,7 @@ import {Colors} from '../../utils';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.PRIMARY,
+    backgroundColor: Colors.SCREEN_BG,
   },
   profileHeader: {
     alignItems: 'center',

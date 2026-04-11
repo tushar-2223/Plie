@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, RefreshControl, ActivityIndicator} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {View, FlatList, RefreshControl, ActivityIndicator} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector, useDispatch} from 'react-redux';
 import Toast from 'react-native-toast-message';
 import EventCard from '../../components/View/EventCard';
@@ -15,17 +16,23 @@ const Events = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const user = useSelector((state: RootState) => state.app.user);
   const token = useSelector((state: RootState) => state.app.token);
   const favoriteItems = useSelector((state: RootState) => state.app.favorites);
   const dispatch = useDispatch();
 
   const favoriteIds = new Set(favoriteItems.map(item => item.event_date_id));
 
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async (isRefresh = false) => {
     if (!token) {
+      setLoading(false);
+      setRefreshing(false);
       return;
     }
+
+    if (!isRefresh) {
+      setLoading(true);
+    }
+
     try {
       const result = await api.getEvents(token);
       if (result.kind === 'ok') {
@@ -50,18 +57,18 @@ const Events = () => {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchEvents();
-  }, [token]);
+  }, [fetchEvents]);
 
-  const onRefresh = () => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
-    fetchEvents();
-  };
+    fetchEvents(true);
+  }, [fetchEvents]);
 
-  const handleToggleFavorite = (event: EventItem) => {
+  const handleToggleFavorite = useCallback((event: EventItem) => {
     dispatch(toggleFavorite(event));
     const isFav = favoriteIds.has(event.event_date_id);
     Toast.show({
@@ -69,21 +76,19 @@ const Events = () => {
       text1: isFav ? Strings.removedFromFavourites : Strings.addedToFavourites,
       visibilityTime: 1500,
     });
-  };
+  }, [dispatch, favoriteIds]);
 
-  const renderItem = ({item}: {item: EventItem}) => (
+  const renderItem = useCallback(({item}: {item: EventItem}) => (
     <EventCard
       event={item}
       isFavorite={favoriteIds.has(item.event_date_id)}
       onToggleFavorite={handleToggleFavorite}
     />
-  );
+  ), [favoriteIds, handleToggleFavorite]);
 
-  const keyExtractor = (item: EventItem) => item.event_date_id.toString();
+  const keyExtractor = useCallback((item: EventItem) => item.event_date_id.toString(), []);
 
-  const userName = user?.usr_fname ?? 'User';
-
-  if (loading) {
+  if (loading && !refreshing) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={Colors.ACCENT} />
@@ -92,16 +97,7 @@ const Events = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.greetingText}>
-          {Strings.hello} {userName}!
-        </Text>
-        <Text style={styles.subtitleText}>{Strings.readyToDance}</Text>
-      </View>
-
-      <View style={styles.divider} />
-
+    <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <FlatList
         data={events}
         renderItem={renderItem}
@@ -120,7 +116,7 @@ const Events = () => {
         maxToRenderPerBatch={10}
         windowSize={5}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector, useDispatch} from 'react-redux';
 import {CommonActions, useNavigation} from '@react-navigation/native';
@@ -32,7 +33,7 @@ const Profile = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <View style={styles.profileHeader}>
         <View style={styles.avatarContainer}>
           <Icon name="account-circle" size={80} color={Colors.ACCENT} />
@@ -49,7 +50,7 @@ const Profile = () => {
           <Text style={styles.logoutText}>{Strings.logOut}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

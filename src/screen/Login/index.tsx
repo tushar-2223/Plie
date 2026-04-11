@@ -110,116 +110,118 @@ const Login = ({navigation}: Props) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
-      <ScrollView
-        bounces={false}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled">
-        
-        <View style={styles.headerArea}>
-          <Text style={styles.logoText}>{Strings.appName}</Text>
-          <View style={styles.imagePlaceholder}>
-            <Image
-              source={Assets.placeholder}
-              style={styles.placeholderImage}
-              resizeMode="contain"
-            />
-          </View>
-        </View>
-
-        <View style={styles.formArea}>
-          <Controller
-            control={control}
-            name="email"
-            render={({field: {onChange, onBlur, value}}) => (
-              <InputText
-                ref={emailRef}
-                label={Strings.emailLabel}
-                placeholder={Strings.emailPlaceholder}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                returnKeyType="next"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                error={errors.email?.message}
-                onSubmitEditing={() => passwordRef.current?.focus()}
-                containerStyle={styles.inputGap}
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
+        <ScrollView
+          bounces={false}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled">
+          
+          <View style={styles.headerArea}>
+            <Text style={styles.logoText}>{Strings.appName}</Text>
+            <View style={styles.imagePlaceholder}>
+              <Image
+                source={Assets.placeholder}
+                style={styles.placeholderImage}
+                resizeMode="contain"
               />
-            )}
-          />
+            </View>
+          </View>
 
-          <Controller
-            control={control}
-            name="password"
-            render={({field: {onChange, onBlur, value}}) => (
-              <InputText
-                ref={passwordRef}
-                label={Strings.passwordLabel}
-                placeholder={Strings.passwordPlaceholder}
-                secureTextEntry={true}
-                showPasswordToggle={true}
-                returnKeyType="done"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                error={errors.password?.message}
-                onSubmitEditing={handleSubmit(onSubmit)}
-                containerStyle={styles.inputGap}
-              />
-            )}
-          />
-
-          <TouchableOpacity style={styles.forgotContainer}>
-            <Text style={styles.forgotText}>{Strings.forgotPassword}</Text>
-          </TouchableOpacity>
-
-          <View style={styles.signInRow}>
-            <CustomButton
-              title={Strings.signIn}
-              onPress={handleSubmit(onSubmit)}
-              loading={loading}
-              style={styles.signInButton}
+          <View style={styles.formArea}>
+            <Controller
+              control={control}
+              name="email"
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputText
+                  ref={emailRef}
+                  label={Strings.emailLabel}
+                  placeholder={Strings.emailPlaceholder}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  returnKeyType="next"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  error={errors.email?.message}
+                  onSubmitEditing={() => passwordRef.current?.focus()}
+                  containerStyle={styles.inputGap}
+                />
+              )}
             />
-          </View>
 
-          <View style={styles.signUpContainer}>
-            <Text style={styles.notMemberText}>{Strings.notMember} </Text>
-            <TouchableOpacity>
-              <Text style={styles.signUpText}>{Strings.signUpHere}</Text>
+            <Controller
+              control={control}
+              name="password"
+              render={({field: {onChange, onBlur, value}}) => (
+                <InputText
+                  ref={passwordRef}
+                  label={Strings.passwordLabel}
+                  placeholder={Strings.passwordPlaceholder}
+                  secureTextEntry={true}
+                  showPasswordToggle={true}
+                  returnKeyType="done"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  error={errors.password?.message}
+                  onSubmitEditing={handleSubmit(onSubmit)}
+                  containerStyle={styles.inputGap}
+                />
+              )}
+            />
+
+            <TouchableOpacity style={styles.forgotContainer}>
+              <Text style={styles.forgotText}>{Strings.forgotPassword}</Text>
+            </TouchableOpacity>
+
+            <View style={styles.signInRow}>
+              <CustomButton
+                title={Strings.signIn}
+                onPress={handleSubmit(onSubmit)}
+                loading={loading}
+                style={styles.signInButton}
+              />
+            </View>
+
+            <View style={styles.signUpContainer}>
+              <Text style={styles.notMemberText}>{Strings.notMember} </Text>
+              <TouchableOpacity>
+                <Text style={styles.signUpText}>{Strings.signUpHere}</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.dividerContainer}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>{Strings.orSignInWith}</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+            <View style={styles.socialContainer}>
+              <TouchableOpacity style={styles.socialButton}>
+                <Image source={Assets.google} style={styles.socialIcon} />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.socialButton}>
+                <Image source={Assets.apple} style={styles.socialIcon} />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.socialButton}>
+                <Image source={Assets.facebook} style={styles.socialIcon} />
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={styles.guestContainer}>
+              <Text style={styles.guestText}>{Strings.enterAsGuest}</Text>
             </TouchableOpacity>
           </View>
-
-          <View style={styles.dividerContainer}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>{Strings.orSignInWith}</Text>
-            <View style={styles.dividerLine} />
-          </View>
-
-          <View style={styles.socialContainer}>
-            <TouchableOpacity style={styles.socialButton}>
-              <Image source={Assets.google} style={styles.socialIcon} />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.socialButton}>
-              <Image source={Assets.apple} style={styles.socialIcon} />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.socialButton}>
-              <Image source={Assets.facebook} style={styles.socialIcon} />
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity style={styles.guestContainer}>
-            <Text style={styles.guestText}>{Strings.enterAsGuest}</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

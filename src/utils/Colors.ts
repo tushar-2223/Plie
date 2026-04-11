@@ -16,4 +16,5 @@ export const Colors = {
   LIGHT_GRAY: '#f5f5f5',
   TAG_BG: '#f0f0f0',
   TAG_TEXT: '#333333',
+  SCREEN_BG: '#f2f2f2',
 };
