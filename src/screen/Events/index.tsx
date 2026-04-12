@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useMemo} from 'react';
 import {View, FlatList, RefreshControl, ActivityIndicator} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector, useDispatch} from 'react-redux';
@@ -6,8 +6,9 @@ import Toast from 'react-native-toast-message';
 import EventCard from '../../components/View/EventCard';
 import {RootState} from '../../redux-toolkit/store';
 import {toggleFavorite} from '../../redux-toolkit/rootSlice';
-import {api} from '../../services/api';
-import {EventItem} from '../../utils/Types';
+import {api} from '../../network/api';
+import {API_ENDPOINTS} from '../../network/apiConst';
+import {EventItem, EventsResponse} from '../../utils/Types';
 import {Colors, Strings} from '../../utils';
 import styles from './style';
 
@@ -20,7 +21,10 @@ const Events = () => {
   const favoriteItems = useSelector((state: RootState) => state.app.favorites);
   const dispatch = useDispatch();
 
-  const favoriteIds = new Set(favoriteItems.map(item => item.event_date_id));
+  const favoriteIds = useMemo(
+    () => new Set(favoriteItems.map(item => item.event_date_id)),
+    [favoriteItems],
+  );
 
   const fetchEvents = useCallback(async (isRefresh = false) => {
     if (!token) {
@@ -34,18 +38,12 @@ const Events = () => {
     }
 
     try {
-      const result = await api.getEvents(token);
-      if (result.kind === 'ok') {
-        const payload = result.response;
-        if (payload.data && payload.data.events) {
-          setEvents(payload.data.events);
-        }
-      } else {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: `Failed to fetch events: ${result.kind}`,
-        });
+      const payload = await api.post<EventsResponse>(
+        API_ENDPOINTS.EVENTS_LISTING,
+        {},
+      );
+      if (payload.data && payload.data.events) {
+        setEvents(payload.data.events);
       }
     } catch (error: any) {
       Toast.show({

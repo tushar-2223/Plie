@@ -1,15 +1,7 @@
 import {ApiResponse} from 'apisauce';
+import type {ApiProblem} from '../utils/Types';
 
-export type GeneralApiProblem =
-  | {kind: 'timeout'; temporary: true}
-  | {kind: 'cannot-connect'; temporary: true}
-  | {kind: 'server'}
-  | {kind: 'unauthorized'}
-  | {kind: 'forbidden'}
-  | {kind: 'not-found'}
-  | {kind: 'rejected'}
-  | {kind: 'unknown'; temporary: true}
-  | {kind: 'bad-data'};
+export type GeneralApiProblem = ApiProblem;
 
 export function getGeneralApiProblem(
   response: ApiResponse<any>,

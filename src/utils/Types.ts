@@ -1,3 +1,40 @@
+export type ApiProblemKind =
+  | 'timeout'
+  | 'cannot-connect'
+  | 'server'
+  | 'unauthorized'
+  | 'forbidden'
+  | 'not-found'
+  | 'rejected'
+  | 'unknown'
+  | 'bad-data';
+
+export interface ApiProblem {
+  kind: ApiProblemKind;
+  temporary?: boolean;
+}
+
+export interface ApiError extends ApiProblem {
+  status?: number;
+  message: string;
+  data?: unknown;
+}
+
+export interface ApiMessageResponse {
+  success?: boolean;
+  message?: string;
+  meta?: {
+    message?: string;
+  };
+  data?: unknown;
+}
+
+export interface ApiDataResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
 export interface UserData {
   usr_id: number;
   usr_fname: string;
@@ -47,20 +84,12 @@ export interface LoginFormValues {
   password: string;
 }
 
-export interface LoginResponse {
-  success: boolean;
-  message: string;
-  data: {
-    user: UserData;
-    token: string;
-  };
-}
+export type LoginResponse = ApiDataResponse<{
+  user: UserData;
+  token: string;
+}>;
 
-export interface EventsResponse {
-  success: boolean;
-  message: string;
-  data: {
-    events: EventItem[];
-    total: number;
-  };
-}
+export type EventsResponse = ApiDataResponse<{
+  events: EventItem[];
+  total: number;
+}>;

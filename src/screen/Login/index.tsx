@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {CommonActions} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
@@ -19,9 +20,10 @@ import InputText from '../../components/UI/InputText';
 import {CustomTextInputRef} from '../../components/UI/InputText';
 import CustomButton from '../../components/UI/CustomButton';
 import {Strings, Assets} from '../../utils';
-import {LoginFormValues} from '../../utils/Types';
+import {LoginFormValues, LoginResponse} from '../../utils/Types';
 import {setUser, setToken} from '../../redux-toolkit/rootSlice';
-import {api} from '../../services/api';
+import {api} from '../../network/api';
+import {API_ENDPOINTS} from '../../network/apiConst';
 import Routes from '../../navigation/Routes';
 import {RootNavigatorType} from '../../navigation/Navigate';
 import styles from './style';
@@ -64,38 +66,36 @@ const Login = ({navigation}: Props) => {
   const onSubmit = async (data: LoginFormValues) => {
     setLoading(true);
     try {
-      const result = await api.login(data.email, data.password);
+      const formData = new FormData();
+      formData.append('email', data.email);
+      formData.append('password', data.password);
 
-      if (result.kind === 'ok') {
-        const payload = result.response;
-        if (payload.success && payload.data) {
-          dispatch(setUser(payload.data.user));
-          dispatch(setToken(payload.data.token));
-          reset();
+      const payload = await api.postFormData<LoginResponse>(
+        API_ENDPOINTS.LOGIN,
+        formData,
+      );
 
-          Toast.show({
-            type: 'success',
-            text1: Strings.loginSuccess,
-          });
+      if (payload.success && payload.data) {
+        dispatch(setUser(payload.data.user));
+        dispatch(setToken(payload.data.token));
+        reset();
 
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{name: Routes.Authenticated}],
-            }),
-          );
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: Strings.loginError,
-            text2: payload.message ?? 'Unknown API error',
-          });
-        }
+        Toast.show({
+          type: 'success',
+          text1: Strings.loginSuccess,
+        });
+
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: Routes.Authenticated}],
+          }),
+        );
       } else {
         Toast.show({
           type: 'error',
           text1: Strings.loginError,
-          text2: `Network error: ${result.kind}`,
+          text2: payload.message ?? 'Unknown API error',
         });
       }
     } catch (error: any) {

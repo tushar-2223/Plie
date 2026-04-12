@@ -1,5 +1,13 @@
 import React, {useState, useImperativeHandle, forwardRef, useRef} from 'react';
-import {View, Text, TextInput, TouchableOpacity, TextInputProps} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TextInputProps,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './style';
 import {Colors} from '../../../utils';
@@ -13,6 +21,7 @@ export interface CustomTextInputProps extends Omit<TextInputProps, 'onChangeText
   error?: string;
   secureTextEntry?: boolean;
   showPasswordToggle?: boolean;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 export interface CustomTextInputRef {
@@ -31,6 +40,7 @@ const InputText = forwardRef<CustomTextInputRef, CustomTextInputProps>((
     error,
     secureTextEntry = false,
     showPasswordToggle = false,
+    containerStyle,
     ...rest
   },
   ref,
@@ -49,7 +59,7 @@ const InputText = forwardRef<CustomTextInputRef, CustomTextInputProps>((
   };
 
   return (
-    <View style={styles.inputField}>
+    <View style={[styles.inputField, containerStyle]}>
       <Text style={styles.label}>{label}</Text>
       <View
         style={[
