@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {Typography} from '../../utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,8 +9,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoText: {
+    fontFamily: Typography.fontFamily.light,
     fontSize: 72,
-    fontWeight: '300',
     color: '#000',
     letterSpacing: 2,
     marginBottom: 60,

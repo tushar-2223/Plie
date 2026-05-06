@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../utils';
+import {Colors, Typography} from '../../utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,11 +12,12 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   greetingText: {
+    fontFamily: Typography.fontFamily.bold,
     fontSize: 28,
-    fontWeight: '700',
     color: Colors.DARK,
   },
   subtitleText: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 15,
     color: Colors.TEXT,
     marginTop: 4,
@@ -40,12 +41,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
   emptyTitle: {
+    fontFamily: Typography.fontFamily.semiBold,
     fontSize: 20,
-    fontWeight: '600',
     color: Colors.DARK,
     marginTop: 16,
   },
   emptySubtext: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 14,
     color: Colors.TEXT,
     textAlign: 'center',

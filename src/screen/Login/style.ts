@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../utils';
+import {Colors, Typography} from '../../utils';
 import {height} from '../../utils/Constant';
 
 const styles = StyleSheet.create({
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   logoText: {
+    fontFamily: Typography.fontFamily.light,
     fontSize: 60,
-    fontWeight: '300',
     color: '#000',
     letterSpacing: 2,
     marginBottom: 60,
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     marginTop: 0, // Adjusted for new input layout
   },
   forgotText: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 11,
     color: '#888',
   },
@@ -67,10 +68,12 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   notMemberText: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 11,
     color: '#000',
   },
   signUpText: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 11,
     color: '#000',
     textDecorationLine: 'underline',
@@ -87,6 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#CCC',
   },
   dividerText: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 11,
     color: '#555',
   },
@@ -120,6 +124,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   guestText: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 12,
     color: '#888',
   },

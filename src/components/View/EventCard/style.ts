@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../../utils';
+import {Colors, Typography} from '../../../utils';
 
 const styles = StyleSheet.create({
   card: {
@@ -33,9 +33,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   eventName: {
-    fontFamily: 'Gothic A1',
+    fontFamily: Typography.fontFamily.semiBold,
     fontSize: 16,
-    fontWeight: '600',
     lineHeight: 16 * 1.2,
     letterSpacing: 0,
     color: '#000000',
@@ -49,17 +48,19 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   eventDate: {
+    fontFamily: Typography.fontFamily.medium,
     fontSize: 14,
     color: '#21D0B2',
-    fontWeight: '500',
     flex: 1,
   },
   locationText: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 14,
     color: '#999999',
     textAlign: 'right',
   },
   eventPrice: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 14,
     color: '#999999',
     marginTop: 2,
@@ -86,9 +87,9 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   tagText: {
+    fontFamily: Typography.fontFamily.semiBold,
     fontSize: 12,
     color: '#4B5563',
-    fontWeight: '600',
   },
   actionsContainer: {
     flexDirection: 'row',

@@ -1,14 +1,14 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../../utils';
+import {Colors, Typography} from '../../../utils';
 
 const styles = StyleSheet.create({
   inputField: {
     marginTop: 8,
   },
   label: {
+    fontFamily: Typography.fontFamily.medium,
     fontSize: 14,
     color: Colors.DARK,
-    fontWeight: '500',
     marginBottom: 6,
   },
   inputContainer: {
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 14,
     paddingVertical: 12,
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 14,
     color: Colors.DARK,
   },
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   error: {
+    fontFamily: Typography.fontFamily.regular,
     color: Colors.ERROR,
     fontSize: 12,
     marginTop: 4,

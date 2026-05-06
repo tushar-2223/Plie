@@ -15,9 +15,7 @@ import styles from './style';
 const Events = () => {
   const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const token = useSelector((state: RootState) => state.app.token);
   const favoriteItems = useSelector((state: RootState) => state.app.favorites);
   const dispatch = useDispatch();
 
@@ -26,14 +24,8 @@ const Events = () => {
     [favoriteItems],
   );
 
-  const fetchEvents = useCallback(async (isRefresh = false) => {
-    if (!token) {
-      setLoading(false);
-      setRefreshing(false);
-      return;
-    }
-
-    if (!isRefresh) {
+  const fetchEvents = useCallback(async (showLoader = true) => {
+    if (showLoader) {
       setLoading(true);
     }
 
@@ -52,18 +44,18 @@ const Events = () => {
         text2: error.message ?? 'Failed to fetch events',
       });
     } finally {
-      setLoading(false);
-      setRefreshing(false);
+      if (showLoader) {
+        setLoading(false);
+      }
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     fetchEvents();
   }, [fetchEvents]);
 
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    fetchEvents(true);
+    fetchEvents(false);
   }, [fetchEvents]);
 
   const handleToggleFavorite = useCallback((event: EventItem) => {
@@ -86,7 +78,7 @@ const Events = () => {
 
   const keyExtractor = useCallback((item: EventItem) => item.event_date_id.toString(), []);
 
-  if (loading && !refreshing) {
+  if (loading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={Colors.ACCENT} />
@@ -104,7 +96,7 @@ const Events = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={refreshing}
+            refreshing={false}
             onRefresh={onRefresh}
             tintColor={Colors.ACCENT}
             colors={[Colors.ACCENT]}

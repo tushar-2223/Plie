@@ -9,7 +9,7 @@ import Events from '../screen/Events';
 import Favourites from '../screen/Favourites';
 import Search from '../screen/Search';
 import Profile from '../screen/Profile';
-import {Colors, Strings} from '../utils';
+import {Colors, Strings, Typography} from '../utils';
 import {RootState} from '../redux-toolkit/store';
 
 export type AuthenticatedNavigatorType = {
@@ -53,6 +53,7 @@ const Authenticated = () => {
         },
         headerTitleAlign: 'left',
         headerTitleStyle: {
+          fontFamily: Typography.fontFamily.semiBold,
           marginLeft: 0,
         },
         tabBarActiveTintColor: Colors.ACCENT,
@@ -66,8 +67,8 @@ const Authenticated = () => {
           paddingBottom: insets.bottom > 0 ? insets.bottom : 8,
         },
         tabBarLabelStyle: {
+          fontFamily: Typography.fontFamily.medium,
           fontSize: 11,
-          fontWeight: '500',
         },
       }}>
       <Tab.Screen
@@ -123,14 +124,14 @@ const navStyles = StyleSheet.create({
     paddingLeft: 4,
   },
   greetingText: {
-    fontFamily: 'Gothic A1',
+    fontFamily: Typography.fontFamily.semiBold,
     fontSize: 26,
-    fontWeight: '600',
     lineHeight: 32,
     letterSpacing: 0,
     color: Colors.DARK,
   },
   subtitleText: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 14,
     color: Colors.TEXT,
     marginTop: 2,

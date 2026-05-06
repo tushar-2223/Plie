@@ -1,8 +1,13 @@
+const fontFamily = {
+  thin: 'GothicA1-Thin',
+  light: 'GothicA1-Light',
+  regular: 'GothicA1-Regular',
+  medium: 'GothicA1-Medium',
+  semiBold: 'GothicA1-SemiBold',
+  bold: 'GothicA1-Bold',
+};
+
 export const Typography = {
-  fontFamily: {
-    regular: 'Gothic A1',
-    semiBold: 'Gothic A1',
-    bold: 'Gothic A1',
-  },
-  default: 'Gothic A1',
+  fontFamily,
+  default: fontFamily.regular,
 };

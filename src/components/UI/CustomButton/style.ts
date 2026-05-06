@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../../utils';
+import {Colors, Typography} from '../../../utils';
 
 const styles = StyleSheet.create({
   button: {
@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
     minWidth: 120, // Predefined minWidth to avoid shrinking
   },
   buttonText: {
+    fontFamily: Typography.fontFamily.semiBold,
     color: Colors.PRIMARY,
     fontSize: 16,
-    fontWeight: '600',
   },
   disabledButton: {
     opacity: 0.6,

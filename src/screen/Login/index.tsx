@@ -59,7 +59,6 @@ const Login = ({navigation}: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  // Refs for focus management
   const emailRef = useRef<CustomTextInputRef>(null);
   const passwordRef = useRef<CustomTextInputRef>(null);
 

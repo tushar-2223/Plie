@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../utils';
+import {Colors, Typography} from '../../utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,11 +17,12 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   nameText: {
+    fontFamily: Typography.fontFamily.bold,
     fontSize: 22,
-    fontWeight: '700',
     color: Colors.DARK,
   },
   emailText: {
+    fontFamily: Typography.fontFamily.regular,
     fontSize: 14,
     color: Colors.TEXT,
     marginTop: 4,
@@ -39,9 +40,9 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.LIGHT_GRAY,
   },
   logoutText: {
+    fontFamily: Typography.fontFamily.medium,
     fontSize: 16,
     color: Colors.ERROR,
-    fontWeight: '500',
   },
 });
 
